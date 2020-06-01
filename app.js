@@ -35,7 +35,34 @@ class Products {
   }
 }
 // display products
-class UI {}
+class UI {
+  displayProducts(products) {
+    let result = "";
+    products.forEach((product) => {
+      result += `
+       <!--Single products -->
+    <article class="product" >
+     <div class="img-container">
+      <img 
+      src=${product.image} 
+      alt="product" 
+      class="product-img" />
+      <button class="bag-btn" data-id=${product.id}>
+       <i class="fas fa-shopping-cart"></i>
+              add to bag
+            </button>
+     </div>
+     <h3>${product.title}</h3>
+     <h4>$${product.price}</h4>
+        </article >
+ <!-- end of Single products-- ->
+     
+     `;
+    });
+    productsDOm.innerHTML = result;
+  }
+}
+
 //local storage
 class Storage {}
 
@@ -43,5 +70,5 @@ document.addEventListener("DOMContentLoaded", () => {
   const ui = new UI();
   const products = new Products();
 
-  products.getProducts().then((data) => console.log(data));
+  products.getProducts().then((products) => ui.displayProducts(products));
 });
