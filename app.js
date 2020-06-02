@@ -88,15 +88,30 @@ class UI {
         //using spread operator to get all the item in the cart = empty
         // add cartItem to it
         cart = [...cart, cartItem];
-        //console.log(cart);
+        console.log(cart);
 
         // save cart in local storage
         Storage.saveCart(cart);
         // set cart values
+        this.setCartValues(cart);
         // display cart item
         // show the cart
       });
     });
+  }
+  // using map function to map each item in the cart with price and amount
+  setCartValues(cart) {
+    let tempTotal = 0;
+    let itemsTotal = 0;
+    cart.map((item) => {
+      tempTotal += item.price * item.amount;
+      itemsTotal += item.amount;
+    });
+    // use toFixed function to round the temTotal value to 2 d.c.p
+    // use parseFloat to convert to float
+    cartTotal.innerText = parseFloat(tempTotal.toFixed(2));
+    cartItems.innerText = itemsTotal;
+    console.log(cartTotal, cartItems);
   }
 }
 
