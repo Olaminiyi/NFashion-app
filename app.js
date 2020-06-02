@@ -11,6 +11,8 @@ const productsDOm = document.querySelector(".products-center");
 
 //cart
 let cart = [];
+// buttons
+let buttonsDOM = [];
 
 // getting the products
 class Products {
@@ -66,24 +68,34 @@ class UI {
   // add spread parameters ... to make the button an array
   getBagButtons() {
     const buttons = [...document.querySelectorAll(".bag-btn")];
+    buttonsDOM = buttons;
     buttons.forEach((button) => {
       let id = button.dataset.id;
       let inCart = cart.find((item) => item.id === id);
       if (inCart) {
         button.innerText = "In cart";
         button.disabled = true;
-      } else {
-        button.addEventListener("click", (event) => {
-          event.target.innerText = "In Cart";
-          event.target.disabled = true;
-          //get product from products
-          // add product to the cart
-          // save cart in local storage
-          // set cart values
-          // display cart item
-          // show the cart
-        });
       }
+      button.addEventListener("click", (event) => {
+        event.target.innerText = "In Cart";
+        event.target.disabled = true;
+        //get product from products
+        //make it an object
+        // use spread operator to make the product an array
+        let cartItem = { ...Storage.getProduct(id), amount: 1 };
+
+        // add product to the cart
+        //using spread operator to get all the item in the cart = empty
+        // add cartItem to it
+        cart = [...cart, cartItem];
+        //console.log(cart);
+
+        // save cart in local storage
+        Storage.saveCart(cart);
+        // set cart values
+        // display cart item
+        // show the cart
+      });
     });
   }
 }
@@ -92,6 +104,15 @@ class UI {
 class Storage {
   static saveProducts(products) {
     localStorage.setItem("products", JSON.stringify(products));
+  }
+  // getting the product id from localStorage
+  static getProduct(id) {
+    let products = JSON.parse(localStorage.getItem("products"));
+    return products.find((product) => product.id === id);
+  }
+  // saving the cart in the local storage
+  static saveCart(cart) {
+    localStorage.setItem("cart", JSON.stringify(cart));
   }
 }
 
