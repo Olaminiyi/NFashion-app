@@ -28,7 +28,12 @@ class Products {
         const { title, price } = item.fields;
         const { id } = item.sys;
         const image = item.fields.image.fields.file.url;
-        return { title, price, id, image };
+        return {
+          title,
+          price,
+          id,
+          image,
+        };
       });
       return products;
     } catch (error) {
@@ -82,7 +87,10 @@ class UI {
         //get product from products
         //make it an object
         // use spread operator to make the product an array
-        let cartItem = { ...Storage.getProduct(id), amount: 1 };
+        let cartItem = {
+          ...Storage.getProduct(id),
+          amount: 1,
+        };
 
         // add product to the cart
         //using spread operator to get all the item in the cart = empty
@@ -95,7 +103,9 @@ class UI {
         // set cart values
         this.setCartValues(cart);
         // display cart item
+        this.addCartItem(cartItem);
         // show the cart
+        this.showCart();
       });
     });
   }
@@ -107,11 +117,40 @@ class UI {
       tempTotal += item.price * item.amount;
       itemsTotal += item.amount;
     });
-    // use toFixed function to round the temTotal value to 2 d.c.p
+    // use toFixed method to round the temTotal value to 2 d.c.p
     // use parseFloat to convert to float
     cartTotal.innerText = parseFloat(tempTotal.toFixed(2));
     cartItems.innerText = itemsTotal;
-    console.log(cartTotal, cartItems);
+    //console.log(cartTotal, cartItems);
+  }
+  // method to add cart to the cart-item div
+  addCartItem(item) {
+    // create a div using document.createElement
+    const div = document.createElement("div");
+    div.classList.add("cart-item");
+    div.innerHTML = ` <img src=${item.image} alt="product" />
+            <div>
+              <h4>${item.title}</h4>
+              <h5>$${item.price}</h5>
+              <span class="remove-item" data-id=${item.id}>remove</span>
+            </div>
+            <div>
+              <i class="fas fa-chevron-up" data-id=${item.id}></i>
+              <p class="item-amount">${item.amount}</p>
+              <i class="fas fa-chevron-down" data-id=${item.id}></i>
+            </div>
+
+    `;
+    cartContent.appendChild(div);
+    //console.log(cartContent);
+  }
+  // show the cart
+  // using the 'transparentBcg' and 'showCart' css class
+  // add 'transparentBcg' class style to the cartOverlay
+  // add 'showCart' class style to the cartDom
+  showCart() {
+    cartOverlay.classList.add("transparentBcg");
+    cartDOM.classList.add("showCart");
   }
 }
 
