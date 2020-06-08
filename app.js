@@ -1,7 +1,7 @@
 // variables declaration
 const cartBtn = document.querySelector(".cart-btn");
 const closeCartBtn = document.querySelector(".close-cart");
-const clearCartBtn = document.querySelector(".clear-btn");
+const clearCartBtn = document.querySelector(".clear-cart");
 const cartDOM = document.querySelector(".cart");
 const cartOverlay = document.querySelector(".cart-overlay");
 const cartItems = document.querySelector(".cart-items");
@@ -56,7 +56,7 @@ class UI {
       class="product-img" />
       <button class="bag-btn" data-id=${product.id}>
        <i class="fas fa-shopping-cart"></i>
-              add to bag
+              add to cart
             </button>
      </div>
      <h3>${product.title}</h3>
@@ -152,6 +152,66 @@ class UI {
     cartOverlay.classList.add("transparentBcg");
     cartDOM.classList.add("showCart");
   }
+  //set the cart values to the item saved already in the local storage
+  setupAPP() {
+    cart = Storage.getCart();
+    this.setCartValues(cart);
+    this.populateCart(cart);
+    cartBtn.addEventListener("click", this.showCart);
+    closeCartBtn.addEventListener("click", this.hideCart);
+  }
+  populateCart(cart) {
+    cart.forEach((item) => this.addCartItem(item));
+  }
+  hideCart() {
+    cartOverlay.classList.remove("transparentBcg");
+    cartDOM.classList.remove("showCart");
+  }
+  cartLogic() {
+    // clear cart button
+    clearCartBtn.addEventListener("click", () => {
+      this.clearCart();
+    });
+    // cart functionality
+    cartContent.addEventListener("click", (event) => {
+      //accessing the css class of remove-item, increase and decrease button
+      // using event,target.classlist
+      if (event.target.classList.contains("remove-item")) {
+        let removeItem = event.target;
+        let id = removeItem.dataset.id;
+        // using removeChild method to remove it from the dom
+        cartContent.removeChild(removeItem.parentElement.parentElement);
+      }
+    });
+  }
+  clearCart() {
+    let cartItems = cart.map((item) => item.id);
+    cartItems.forEach((id) => this.removeItem(id));
+    console.log(cartContent.children);
+
+    // removing the item from the item from the cart dom using the children attribute
+    // loop through the cart content and remove them one by one
+    while (cartContent.children.length > 0) {
+      cartContent.removeChild(cartContent.children[0]);
+    }
+    this.hideCart();
+  }
+  removeItem(id) {
+    cart = cart.filter((item) => item.id !== id);
+    // update the cart values
+    this.setCartValues(cart);
+    // save the current items in the cart to local storage
+    Storage.saveCart(cart);
+    // make the add to bag button of the item be active
+    // and change from in cart to add bag to button
+    let button = this.getSingleButton(id);
+    button.disabled = false;
+    button.innerHTML = `<i class="fas fa-shopping-cart">add to cart
+    </i> `;
+  }
+  getSingleButton(id) {
+    return buttonsDOM.find((button) => button.dataset.id === id);
+  }
 }
 
 //local storage
@@ -168,12 +228,20 @@ class Storage {
   static saveCart(cart) {
     localStorage.setItem("cart", JSON.stringify(cart));
   }
+  // get item present in the local storage when loading the page
+  static getCart() {
+    return localStorage.getItem("cart")
+      ? JSON.parse(localStorage.getItem("cart"))
+      : [];
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   const ui = new UI();
   const products = new Products();
-
+  // setup App
+  ui.setupAPP();
+  // get all products
   products
     .getProducts()
     .then((products) => {
@@ -182,5 +250,6 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .then(() => {
       ui.getBagButtons();
+      ui.cartLogic();
     });
 });
