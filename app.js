@@ -181,6 +181,36 @@ class UI {
         let id = removeItem.dataset.id;
         // using removeChild method to remove it from the dom
         cartContent.removeChild(removeItem.parentElement.parentElement);
+        this.removeItem(id);
+      }
+      // for adding button
+      else if (event.target.classList.contains("fa-chevron-up")) {
+        let addAmount = event.target;
+        let id = addAmount.dataset.id;
+        //console.log(addAmount);
+        let tempItem = cart.find((item) => item.id === id);
+        tempItem.amount = tempItem.amount + 1;
+        Storage.saveCart(cart);
+        this.setCartValues(cart);
+        addAmount.nextElementSibling.innerText = tempItem.amount;
+      }
+      // for lower button
+      else if (event.target.classList.contains("fa-chevron-down")) {
+        let lowerAmount = event.target;
+        let id = lowerAmount.dataset.id;
+        let tempItem = cart.find((item) => item.id === id);
+        tempItem.amount = tempItem.amount - 1;
+        // if the selected item in the cart = 1 or more than 1
+        if (tempItem.amount > 0) {
+          Storage.saveCart(cart);
+          this.setCartValues(cart);
+          lowerAmount.previousElementSibling.innerText = tempItem.amount;
+        }
+        // if the selected is not present in the cart again
+        else {
+          cartContent.removeChild(lowerAmount.parentElement.parentElement);
+          this.removeItem(id);
+        }
       }
     });
   }
