@@ -18,6 +18,8 @@ const cartItems = document.querySelector(".cart-items");
 const cartTotal = document.querySelector(".cart-total");
 const cartContent = document.querySelector(".cart-content");
 const productsDOm = document.querySelector(".products-center");
+const shopNow = document.querySelector(".banner-btn");
+const shopbtn = document.getElementById("products");
 
 //cart
 let cart = [];
@@ -63,6 +65,7 @@ class Products {
     }
   }
 }
+
 // display products
 class UI {
   displayProducts(products) {
@@ -264,6 +267,9 @@ class UI {
   getSingleButton(id) {
     return buttonsDOM.find((button) => button.dataset.id === id);
   }
+  shoppingNow() {
+    shopNow.addEventListener("click", productsDOm.scrollIntoView());
+  }
 }
 
 //local storage
@@ -303,5 +309,6 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(() => {
       ui.getBagButtons();
       ui.cartLogic();
+      // ui.shoppingNow();
     });
 });

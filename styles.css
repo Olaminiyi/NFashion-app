@@ -254,5 +254,48 @@ body {
   text-transform: capitalize;
   margin-bottom: 1rem;
 }
+#checkout {
+  margin-top: 90px;
+}
 
 /* --------------- End of Cart ---------------- */
+
+/* --------------- footer ---------------- */
+.footer {
+  background: var(--mainBlack);
+
+  top: 0;
+  height: 120px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  z-index: 1;
+}
+.footernav {
+  overflow: hidden;
+}
+.footernav a {
+  float: left;
+  color: grey;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 15px;
+}
+.footernav a:hover {
+  background-color: black;
+  color: var(--mainWhite);
+}
+.bigfootnav {
+  display: block;
+  margin-left: 100px;
+}
+.para {
+  float: left;
+  color: grey;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 15px;
+}
