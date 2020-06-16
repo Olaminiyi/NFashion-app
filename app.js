@@ -9,6 +9,7 @@ const client = contentful.createClient({
 //console.log(client);
 
 // variables declaration
+const rootHead = document.querySelector(".navbar");
 const cartBtn = document.querySelector(".cart-btn");
 const closeCartBtn = document.querySelector(".close-cart");
 const clearCartBtn = document.querySelector(".clear-cart");
@@ -299,6 +300,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const products = new Products();
   // setup App
   ui.setupAPP();
+
+  shopNow.addEventListener("click", () => {
+    productsDOm.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  });
+
+  //rootHead.scrollIntoView();
   // get all products
   products
     .getProducts()
