@@ -23,31 +23,59 @@ body {
   background: var(--mainWhite);
   position: sticky;
   top: 0;
-  height: 70px;
+  height: 80px;
   width: 100%;
   display: flex;
-  align-items: center;
+  /* align-items: center;*/
   background: rgb(231, 226, 221);
   z-index: 1;
 }
 .navbar-center {
   width: 100%;
-  max-width: 1170px;
+  /*max-width: 1170px;*/
   margin: 0 auto;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  /*align-items: stretch;*/
+  /*justify-content: space-between;*/
   padding: 0 1.5rem;
 }
 .nav-icon {
   font-size: 1.5rem;
 }
+.nav-icon i {
+  margin-top: 20px;
+}
 .cart-btn {
   position: relative;
   cursor: pointer;
+  margin-left: 100px;
+}
+.image {
+  display: absolute;
+  height: 70px;
+  width: 200px;
+  margin-left: 545px;
+}
+.search {
+  display: inline;
+  margin-left: 30px;
+}
+.search input[type="text"] {
+  float: right;
+  margin-top: 15px;
+  width: 220px;
+  height: 30px;
+  border: none;
+}
+.search button {
+  margin-top: 15px;
+  margin-left: 250px;
+  height: 30px;
+  width: 35px;
 }
 .cart-items {
   position: absolute;
+  margin-top: 20px;
   top: -8px;
   right: -8px;
   background: var(--primaryColor);
