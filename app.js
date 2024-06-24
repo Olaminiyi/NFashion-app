@@ -1,4 +1,4 @@
-// adding contentful
+// adding contentful.
 const client = contentful.createClient({
   // This is the space ID. A space is like a project folder in Contentful terms
   space: "pu6s20v1iy4k",
@@ -8,7 +8,7 @@ const client = contentful.createClient({
 
 //console.log(client);
 
-// variables declaration
+// variables declaration.
 const rootHead = document.querySelector(".navbar");
 const cartBtn = document.querySelector(".cart-btn");
 const closeCartBtn = document.querySelector(".close-cart");
