@@ -6,7 +6,7 @@ const client = contentful.createClient({
   accessToken: "JdR0FpkOggbpMBN6q1zp7pXjOO1VYE9zhex7dIPrupk",
 });
 
-//console.log(client);
+//.console.log(client);
 
 // variables declaration.
 const rootHead = document.querySelector(".navbar");
